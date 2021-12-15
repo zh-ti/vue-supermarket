@@ -1,11 +1,14 @@
 <template>
   <div id="app">
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <tabbar></tabbar>
   </div>
 </template>
 
 <script>
-import Tabbar from '@/components/content/Tabbar';
+import Tabbar from 'components/content/Tabbar';
 
 export default {
   name: 'App',
@@ -16,5 +19,5 @@ export default {
 </script>
 
 <style>
-  @import "~@/assets/css/base.css";
+  @import "~assets/css/base.css";
 </style>

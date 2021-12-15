@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import MainTabbar from '@/components/common/tabbar/MainTabbar.vue';
-import {tabbar} from '@/data/data.js';
+import MainTabbar from 'components/common/tabbar/MainTabbar.vue';
+import {tabbar} from 'data/data.js';
 
 export default {
     data(){

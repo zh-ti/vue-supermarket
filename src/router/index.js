@@ -1,35 +1,53 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        redirect: '/home',
-    },
-    {
-        path: '/home',
-        component: () => import('@/views/home/Home'),
-    },
-    {
-        path: '/category',
-        component: () => import('@/views/category/Category'),
-    },
-    {
-        path: '/cart',
-        component: () => import('@/views/cart/Cart'),
-    },
-    {
-        path: '/profile',
-        component: () => import('@/views/profile/Profile'),
-    },
-    {
-        path: '/*',
-        redirect: '/home',
-    },
-]
+  {
+    path: "/",
+    redirect: "/home",
+  },
+  {
+    path: "/home",
+    component: () => import("@/views/home/Home"),
+    children: [
+      {
+        path: "/",
+        redirect: "pop",
+      },
+      {
+        path: "pop",
+        component: () => import("views/home/exhibitions/Pop"),
+      },
+      {
+        path: "new",
+        component: () => import("views/home/exhibitions/New"),
+      },
+      {
+        path: "sell",
+        component: () => import("views/home/exhibitions/Sell"),
+      },
+    ],
+  },
+  {
+    path: "/category",
+    component: () => import("@/views/category/Category"),
+  },
+  {
+    path: "/cart",
+    component: () => import("@/views/cart/Cart"),
+  },
+  {
+    path: "/profile",
+    component: () => import("@/views/profile/Profile"),
+  },
+  {
+    path: "/*",
+    redirect: "/home",
+  },
+];
 
-const router = new VueRouter({ routes, mode: 'history' })
+const router = new VueRouter({ routes, mode: "history" });
 
-export default router
+export default router;
