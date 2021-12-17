@@ -13,10 +13,6 @@ const routes = [
     component: () => import("@/views/home/Home"),
     children: [
       {
-        path: "/",
-        redirect: "pop",
-      },
-      {
         path: "pop",
         component: () => import("views/home/exhibitions/Pop"),
       },
@@ -42,12 +38,14 @@ const routes = [
     path: "/profile",
     component: () => import("@/views/profile/Profile"),
   },
-  {
-    path: "/*",
-    redirect: "/home",
-  },
 ];
 
 const router = new VueRouter({ routes, mode: "history" });
+
+const originalPush = VueRouter.prototype.push;
+
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
 
 export default router;

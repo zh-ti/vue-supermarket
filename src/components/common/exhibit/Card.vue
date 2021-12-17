@@ -32,6 +32,7 @@ export default {
         background-color: #fff;
         border-radius: 7px;
         overflow: hidden;
+        width: 48%;
     }
     .card img{
         width: 100%;

@@ -1,15 +1,15 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><h4 slot="center">购物街</h4></nav-bar>
-    <swiper class="home-swiper" :banners="banners.list"/>
-    <recommend :recommends="recommend.list"/>
-    <feature />
-    <pick-bar class="home-pick" @pickItemClick="pickItemClick"/>
-    <main>
+    <scroll class="wrapper" @loadMore="loadMore">
+      <swiper class="home-swiper" :banners="banners.list"/>
+      <recommend :recommends="recommend.list"/>
+      <feature />
+      <pick-bar class="home-pick" @pickItemClick="pickItemClick"/>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
-    </main>
+    </scroll>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ import Swiper from "./Swiper"
 import Recommend from "./Recommend"
 import Feature from './Feature'
 import PickBar from 'components/common/pickbar/PickBar'
+import Scroll from 'components/common/scroll/Scroll'
 
 import {getHomeMultidata} from 'network/home'
 
@@ -29,9 +30,8 @@ export default {
       dKeyword: [],
       keywords: [],
       recommend: [],
-      goods:{
-        pop: [],
-      }
+      bScroll: null,
+      fillGoods: this.$store.state.homeGoods.fillGoods
     }
   },
   components:{
@@ -39,7 +39,8 @@ export default {
     Swiper,
     Recommend,
     Feature,
-    PickBar
+    PickBar,
+    Scroll
   },
   created(){
     getHomeMultidata().then(result=>{
@@ -49,10 +50,19 @@ export default {
       this.recommend = result.data.recommend
     });
   },
+  mounted(){
+  },
+  activated(){
+    this.$router.push('/home/pop');
+  },
   methods:{
     pickItemClick(name){
       if(this.$route.path == '/home/'+name) return;
-      this.$router.replace('/home/'+name);
+      this.$router.replace(name);
+    },
+    loadMore(scroll){
+      // console.log(this.$store.state.homeGoods.pop.page);
+      this.$store.state.homeGoods.fillGoods(scroll.finishPullUp);
     }
   }
 }
@@ -60,12 +70,17 @@ export default {
 
 <style scoped>
   #home{
+    height: 100vh;
+    position: relative;
     background-color: #ddd;
   }
-  main{
-    padding: 5px 10px;
-    padding-bottom: 50px;
-    min-height:100vh;
+  .wrapper{
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: 49px;
+    overflow: hidden;
   }
   .home-nav{
     background-color: var(--color-tint);

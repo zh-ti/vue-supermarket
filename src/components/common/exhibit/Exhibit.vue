@@ -1,6 +1,6 @@
 <template>
   <div id="exhibit">
-      <goods-card class="item" v-for="item in exhibitions" :key="item.iid" :showMessage="item"/>
+        <goods-card class="item" v-for="item in exhibitions" :key="item.link" :showMessage="item"/>
   </div>
 </template>
 
@@ -17,8 +17,8 @@ export default {
         }
     },
     components:{
-        GoodsCard
-    }
+        GoodsCard,
+    },
 }
 </script>
 
@@ -28,8 +28,5 @@ export default {
         flex-wrap: wrap;
         justify-content: space-evenly;
         align-items: flex-start;
-    }
-    .item{
-        width: 48%;
     }
 </style>
